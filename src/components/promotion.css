@@ -1,0 +1,45 @@
+.center-align {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  margin: auto;
+  padding-top: .15em;
+  padding-bottom: .15em;
+}
+
+p {
+  margin: .15em;
+}
+
+.promos-option {
+  width: fit-content;
+  margin: auto;
+  text-decoration: underline;
+  padding-left: .25em;
+  padding-right: .25em;
+  font-size: .75em;
+}
+
+.promos-option:hover {
+  color: orange;
+}
+
+.promotion {
+  width: 100%;
+  background-color: black;
+  color: white;
+  padding: .5em;
+}
+
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+@media only screen and (max-width: 600px) {
+  .center-align {
+    flex-direction: column;
+    text-align: center;
+  }
+}

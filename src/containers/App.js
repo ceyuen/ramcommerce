@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+
 import './App.css';
 import api from '../api.js';
+import Promotion from '../components/promotion.jsx';
 
 class App extends Component {
   constructor() {
@@ -20,6 +22,7 @@ class App extends Component {
     return (
       <div className="App">
         {console.log(this.state.inventory)}
+        <Promotion />
       </div>
     );
   }
