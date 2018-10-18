@@ -46,8 +46,8 @@ export default class Promotion extends Component {
         <span className='center-align'>
           {/* take first in promotions array assuming it is sorted and priority promo is first */}
           {this.compilePromotionStatement(this.state.promotions[0])}
-          {this.showMoreOption()}
           {this.renderOtherPromos()}
+          {this.showMoreLess()}
         </span>
       )
     }
@@ -60,22 +60,19 @@ export default class Promotion extends Component {
       return (
         <div>
           {promotionsExcludingPriority.map(promotion => this.compilePromotionStatement(promotion))}
-          <div className='promos-option' onClick={() => { this.handlePromoClick() }}>
-            Less Offers
-          </div>
         </div>
       )
     }
   }
 
-  showMoreOption = () => {
-    if (!this.state.showAllPromos) {
+  showMoreLess = () => {
+    let show = this.state.showAllPromos ? 'Less' : 'More';
       return (
-        <span className='promos-option' onClick={() => this.handlePromoClick()}>
-          More offers
-        </span>
+        <p className='promos-option' onClick={() => this.handlePromoClick()}>
+          {`${show} offers`}
+        </p>
       )
-    }
+
   }
 
   render() {
