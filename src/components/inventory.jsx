@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import api from '../api.js';
+import { Link } from 'react-router-dom'
 
+import api from '../api.js';
 import './inventory.css';
-import ProductCard from './productCard.jsx';
+import Product from './product.jsx';
 
 export default class Inventory extends Component {
   state = {};
@@ -18,7 +19,11 @@ export default class Inventory extends Component {
     return (
       <div className='inventory-container'>
         {this.state.inventory 
-          ? this.state.inventory.map(item => <ProductCard name={item.name} price={item.price}/>) 
+          ? this.state.inventory.map((item, key) => (
+            <Link to={`/shop/${item.itemId}`}>
+              <Product name={item.name} price={item.price}/> 
+            </Link>
+          ))
           : null}
       </div>
     )
