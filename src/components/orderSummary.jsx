@@ -3,6 +3,9 @@ import { Button } from 'semantic-ui-react';
 
 const OrderSummary = ({ merchandiseTotal, discount, shipCost, subTotal, tax, total, handlePlaceOrder}) => (
     <div>
+      <h2>
+        Order Summary
+      </h2>
       Merchandise: ${merchandiseTotal}
       {discount
         ?

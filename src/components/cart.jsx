@@ -8,7 +8,7 @@ import ShoppingCart from './shoppingCart.jsx';
 import ShippingOptions from './shippingOptions.jsx';
 import PromotionInCart from './promotionInCart.jsx';
 import CartModalSuccess from './cartModalSucess.jsx';
-import cartModalSuccess from './cartModalSucess.jsx';
+import './cart.css';
 
 export default class Cart extends Component {
   state = {
@@ -102,10 +102,10 @@ export default class Cart extends Component {
 
   render() {
     return (
-      <div>
+      <div className='cart'>
         {window.sessionStorage.length
           ? <Grid stackable columns={2}>
-            <Grid.Column>
+            <Grid.Column width={12}>
               <ShoppingCart orderItems={this.state.orderItems} />
               <ShippingOptions
                 shippingOptions={this.state.shippingOptions}
@@ -120,9 +120,6 @@ export default class Cart extends Component {
             </Grid.Column>
             <Grid.Column width={4}>
               <Sticky>
-                <h2>
-                  Order Summary
-                </h2>
                 <OrderSummary
                   merchandiseTotal={this.state.merchandiseTotal}
                   discount={this.state.discount}
