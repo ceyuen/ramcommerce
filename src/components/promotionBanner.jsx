@@ -17,7 +17,7 @@ export default class PromotionBanner extends Component {
 
   render() {
     return (
-      <div className='sticky'>
+      <div>
         <div className='promotion center-align'>
           {this.state.promotions ? compilePromotionStatement(this.state.promotions[0]) : null}
            &nbsp;
