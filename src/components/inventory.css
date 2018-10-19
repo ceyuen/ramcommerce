@@ -7,6 +7,7 @@
   grid-row-gap: 20px;
   position: relative;
   z-index: 0;
+  margin-bottom:2em;
 }
 
 @media only screen and (max-width: 600px) {
