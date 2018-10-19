@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Grid, Loader } from 'semantic-ui-react'
+import { Grid, Image, Loader } from 'semantic-ui-react'
 
 import api from '../api.js';
+import './productDetails.css';
 
 export default class ProductDetails extends Component {
   state = {};
@@ -20,14 +21,32 @@ export default class ProductDetails extends Component {
       return (
         <Grid stackable divided='vertically'>
           <Grid.Row columns={2}>
-            <Grid.Column>
+            <Grid.Column textAlign="right">
+              <Image src='https://loremflickr.com/320/240/dog' alt='Photo of a dog'/>
             </Grid.Column>
             <Grid.Column>
+              <h2>
+                {this.state.product.name}
+              </h2>
+              <h3>
+                ${this.state.product.price}
+              </h3>
+              <span>
+                {this.state.product.inStock 
+                  ? 'In stock'
+                  : 'Out of stock'}
+              </span>
             </Grid.Column>
           </Grid.Row>
 
           <Grid.Row columns={1}>
             <Grid.Column>
+              <h3>
+                Description
+              </h3>
+              <span>
+                {this.state.product.description}
+              </span>
             </Grid.Column>
           </Grid.Row>
         </Grid>

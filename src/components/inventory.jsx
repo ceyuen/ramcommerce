@@ -20,7 +20,7 @@ export default class Inventory extends Component {
       <div className='inventory-container'>
         {this.state.inventory 
           ? this.state.inventory.map((item, key) => (
-            <Link to={`/shop/${item.itemId}`}>
+            <Link to={`/shop/${item.itemId}`} key={key}>
               <Product name={item.name} price={item.price}/> 
             </Link>
           ))
