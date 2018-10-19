@@ -7,10 +7,13 @@ import OrderSummary from './orderSummary.jsx';
 import ShoppingCart from './shoppingCart.jsx';
 import ShippingOptions from './shippingOptions.jsx';
 import PromotionInCart from './promotionInCart.jsx';
+import CartModalSuccess from './cartModalSucess.jsx';
+import cartModalSuccess from './cartModalSucess.jsx';
 
 export default class Cart extends Component {
   state = {
     orderItems: [],
+    modalOpen: false
   }
 
   componentDidMount() {
@@ -25,7 +28,7 @@ export default class Cart extends Component {
   }
 
   updateCost = () => {
-    let discount = 0; 
+    let discount = 0;
     if (this.state.promotion) {
       if (this.state.promotion.promotionType === 'PercentOff') {
         discount = this.state.merchandiseTotal * this.state.promotion.promoAmt;
@@ -33,14 +36,14 @@ export default class Cart extends Component {
         discount = this.state.promotion.promoAmt;
       }
     }
-
+    
     let subTotal = this.state.merchandiseTotal + this.state.shipCost - discount;
-    let tax = Math.ceil(subTotal * .1); 
-    let total = subTotal + tax; 
+    let tax = Math.ceil(subTotal * .1);
+    let total = subTotal + tax;
     this.setState({
       discount,
-      subTotal, 
-      tax, 
+      subTotal,
+      tax,
       total,
     })
   }
@@ -51,8 +54,28 @@ export default class Cart extends Component {
 
   handleInputChange = (event) => this.setState({ [event.target.name]: event.target.value })
 
-  handlePlaceOrder = () => {
+  handleModalClose = () => this.setState({ modalOpen: false })
 
+  handlePlaceOrder = () => {
+    api.order.post({
+      'merchantId': 'QueenOfDragons',
+      'orderItems': this.state.orderItems,
+      'promotion': {
+        ...this.state.promotion,
+        'orderSubtotal': this.state.subTotal,
+      },
+      'taxTotal': this.state.tax,
+      'shippingTotal': this.state.shipCost,
+      'merchantOrderReference': 'HandOfTheQueen',
+      'orderDate': Math.floor(Date.now() / 1000),
+      'signature': 'Unused. A digital signature for this object'
+    })
+      .then(({ data }) => 
+        this.setState({
+          modalOpen: true,
+          transactionId: data.transactionId
+        })
+      )
   }
 
   parseSessionStorage = () => {
@@ -63,17 +86,17 @@ export default class Cart extends Component {
       }
     }
     let merchandiseTotal = orderItems.reduce((a, b) => a + (b.qtyOrdered * b.price), 0);
-    
-    this.setState({ 
+
+    this.setState({
       orderItems: orderItems,
       merchandiseTotal: merchandiseTotal
     });
   }
 
   applyPromotion = () => {
-    api.promotion.getOne({promoId: this.state.promoId})
+    api.promotion.getOne({ promoId: this.state.promoId })
       .then(({ data }) => {
-        this.setState({promotion: data}, () => this.updateCost());
+        this.setState({ promotion: data }, () => this.updateCost());
       })
   }
 
@@ -83,13 +106,13 @@ export default class Cart extends Component {
         {window.sessionStorage.length
           ? <Grid stackable columns={2}>
             <Grid.Column>
-              <ShoppingCart orderItems={this.state.orderItems}/>
-              <ShippingOptions 
+              <ShoppingCart orderItems={this.state.orderItems} />
+              <ShippingOptions
                 shippingOptions={this.state.shippingOptions}
                 handleRadioChange={this.handleRadioChange}
                 radioCheck={this.radioCheck}
               />
-              <PromotionInCart 
+              <PromotionInCart
                 handleInputChange={this.handleInputChange}
                 applyPromotion={this.applyPromotion}
               />
@@ -100,7 +123,7 @@ export default class Cart extends Component {
                 <h2>
                   Order Summary
                 </h2>
-                <OrderSummary 
+                <OrderSummary
                   merchandiseTotal={this.state.merchandiseTotal}
                   discount={this.state.discount}
                   shipCost={this.state.shipCost}
@@ -111,6 +134,11 @@ export default class Cart extends Component {
                 />
               </Sticky>
             </Grid.Column>
+            <CartModalSuccess 
+              modalOpen={this.state.modalOpen} 
+              transactionId={this.state.transactionId} 
+              handleModalClose={this.handleModalClose}
+            />
           </Grid>
           : <h2>
             Your cart is empty.
