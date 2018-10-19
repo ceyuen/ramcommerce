@@ -2,10 +2,13 @@
   width: 80%;
   margin: auto;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-template-rows: auto auto;
   grid-column-gap: 20px;
   grid-row-gap: 20px;
+  position: relative;
+  z-index: 0;
 }
 
 @media only screen and (max-width: 600px) {

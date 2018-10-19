@@ -3,3 +3,8 @@
   position: sticky;
   top: 0;
 }
+
+*, :after, :before {
+  position: relative;
+  z-index: 100;
+}
