@@ -1,7 +1,7 @@
 import React from 'react';
 import { Item } from 'semantic-ui-react';
 
-const ShoppingCart = ({ orderItems }) => (
+const OrderItems = ({ orderItems }) => (
   <div>
     <h2>
       Shopping Cart
@@ -28,4 +28,4 @@ const ShoppingCart = ({ orderItems }) => (
   </div>
 )
 
-export default ShoppingCart;
+export default OrderItems;

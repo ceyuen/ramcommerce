@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import api from '../api.js';
 import OrderSummary from './orderSummary.jsx';
-import ShoppingCart from './shoppingCart.jsx';
+import OrderItems from './orderItems.jsx';
 import ShippingOptions from './shippingOptions.jsx';
 import PromotionInCart from './promotionInCart.jsx';
 import CartModalSuccess from './cartModalSucess.jsx';
@@ -71,12 +71,13 @@ export default class Cart extends Component {
       'orderDate': Math.floor(Date.now() / 1000),
       'signature': 'Unused. A digital signature for this object'
     })
-      .then(({ data }) => 
+      .then(({ data }) => {
         this.setState({
           modalOpen: true,
           transactionId: data.transactionId
-        })
-      )
+        });
+        window.sessionStorage.clear();
+      })
   }
 
   setOrderItems = () => {
@@ -102,7 +103,7 @@ export default class Cart extends Component {
         {window.sessionStorage.length
           ? <Grid stackable columns={2}>
             <Grid.Column width={12}>
-              <ShoppingCart orderItems={this.state.orderItems} />
+              <OrderItems orderItems={this.state.orderItems} />
               <ShippingOptions
                 shippingOptions={this.state.shippingOptions}
                 handleRadioChange={this.handleRadioChange}
