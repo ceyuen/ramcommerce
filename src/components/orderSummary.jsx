@@ -19,6 +19,7 @@ const OrderSummary = ({ merchandiseTotal, discount, shipCost, subTotal, tax, tot
       Tax: ${tax}
       <hr />
       Order Total: ${total}
+      <br />
       <Button color='blue' onClick={handlePlaceOrder}>
         Place Order 
       </Button>
