@@ -4,7 +4,7 @@ import { Item } from 'semantic-ui-react';
 import api from '../api.js';
 import './promotionBanner.css';
 import compilePromotionStatement from '../promotionHelper.js';
-
+import './allPromotions.css';
 
 export default class AllPromotions extends Component {
   state = {}
@@ -18,7 +18,7 @@ export default class AllPromotions extends Component {
 
   render() {
     return (
-      <div>
+      <div className='all-promos'>
         <Item.Group divided>
           {this.state.promotions
             ? this.state.promotions.map((promo, key) => (
