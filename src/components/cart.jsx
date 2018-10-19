@@ -8,6 +8,7 @@ import ShoppingCart from './shoppingCart.jsx';
 import ShippingOptions from './shippingOptions.jsx';
 import PromotionInCart from './promotionInCart.jsx';
 import CartModalSuccess from './cartModalSucess.jsx';
+import parseSessionStorage from '../parseSessionStorageHelper.js';
 import './cart.css';
 
 export default class Cart extends Component {
@@ -17,7 +18,7 @@ export default class Cart extends Component {
   }
 
   componentDidMount() {
-    this.parseSessionStorage();
+    this.setOrderItems();
     api.shipping.getAll()
       .then(({ data }) => {
         this.setState({
@@ -78,13 +79,8 @@ export default class Cart extends Component {
       )
   }
 
-  parseSessionStorage = () => {
-    let orderItems = [];
-    for (let key in window.sessionStorage) {
-      if (typeof window.sessionStorage[key] === 'string') {
-        orderItems.push(JSON.parse(window.sessionStorage[key]));
-      }
-    }
+  setOrderItems = () => {
+    let orderItems = parseSessionStorage();
     let merchandiseTotal = orderItems.reduce((a, b) => a + (b.qtyOrdered * b.price), 0);
 
     this.setState({
@@ -116,7 +112,6 @@ export default class Cart extends Component {
                 handleInputChange={this.handleInputChange}
                 applyPromotion={this.applyPromotion}
               />
-              {console.log(this.state)}
             </Grid.Column>
             <Grid.Column width={4}>
               <Sticky>

@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { Button, Icon, Grid, Image, Input, Loader } from 'semantic-ui-react'
+import { Button, Grid, Image, Input, Loader } from 'semantic-ui-react'
 
 import api from '../api.js';
 import './productDetails.css';
+import ProductModal from './productModal.jsx';
 
 export default class ProductDetails extends Component {
   state = {
-    qtyOrdered: 1
+    qtyOrdered: 1,
+    modalOpen: false
   };
 
   componentDidMount() {
@@ -25,11 +27,14 @@ export default class ProductDetails extends Component {
     };
     delete addToCartDetails.inStock;
     window.sessionStorage.setItem(`${this.state.product.itemId}`, JSON.stringify(addToCartDetails));
+    this.setState({ modalOpen: true })
   }
 
   handleInputChange = (event) => {
     this.setState({ [event.target.name]: event.target.value })
   }
+
+  handleModalClose = () => this.setState({ modalOpen: false })
 
   renderQtyInput = () => {
     if (this.state.product.inStock) {
@@ -45,11 +50,11 @@ export default class ProductDetails extends Component {
             size='tiny'
           />
 
-          <Button 
-            animated 
+          <Button
+            animated
             color='blue'
             onClick={this.handleAddToCart}
-            >
+          >
             <Button.Content visible>Add To Cart</Button.Content>
             <Button.Content hidden>
               {`Add ${this.state.qtyOrdered} To Cart`}
@@ -96,6 +101,14 @@ export default class ProductDetails extends Component {
                 </span>
               </Grid.Column>
             </Grid.Row>
+
+            <ProductModal
+              modalOpen={this.state.modalOpen}
+              handleModalClose={this.handleModalClose}
+              qtyOrdered={this.state.qtyOrdered}
+              name={this.state.product.name}
+            />
+            
           </Grid>
           : <Loader active size='huge' />
         }
