@@ -78,7 +78,7 @@ export default class ProductDetails extends Component {
           ? <Grid stackable divided='vertically'>
             <Grid.Row columns={2}>
               <Grid.Column textAlign="right">
-                <Image src='https://loremflickr.com/320/240/dog' alt='Photo of a dog' />
+                <Image src='https://picsum.photos/320/240/?random' alt='Random Photo' />
               </Grid.Column>
               <Grid.Column>
                 <h2>
@@ -108,7 +108,7 @@ export default class ProductDetails extends Component {
               qtyOrdered={this.state.qtyOrdered}
               name={this.state.product.name}
             />
-            
+
           </Grid>
           : <Loader active size='huge' />
         }

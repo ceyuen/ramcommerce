@@ -9,7 +9,7 @@ const ShoppingCart = ({ orderItems }) => (
     <Item.Group divided>
       {orderItems.map((item, key) => (
         <Item key={key}>
-          <Item.Image size='small' src='https://loremflickr.com/320/240/cat' alt={`Photo of a cat`} />
+          <Item.Image size='small' src='https://picsum.photos/320/240/?random' alt='Random Photo' />
           <Item.Content>
             <Item.Header>
               {item.name}

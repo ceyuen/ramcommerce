@@ -5,7 +5,7 @@ export default class Product extends Component {
   render() {
     return (
       <Card>
-        <Image src='https://loremflickr.com/320/240/snow' alt='Photo of snow'/>
+        <Image src='https://picsum.photos/320/240/?random' alt='Random Photo'/>
         <Card.Content>
           <Card.Header>{this.props.name}</Card.Header>
           <Card.Description>${this.props.price}</Card.Description>
