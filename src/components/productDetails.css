@@ -1,3 +1,20 @@
 img.ui.image {
   float: right;
 }
+
+.ui.input {
+  display: block;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+.ui.labeled.input:not([class*="corner labeled"]) .label:first-child+input {
+  width: 65px;
+}
+
+@media only screen and (max-width: 600px) {
+  .ui.stackable.celled.grid>.column:not(.row):first-child, .ui.stackable.celled.grid>.row:first-child>.column:first-child, .ui.stackable.divided.grid>.column:not(.row):first-child, .ui.stackable.divided.grid>.row:first-child>.column:first-child {
+    display: flex;
+    justify-content: center;
+  }
+}
