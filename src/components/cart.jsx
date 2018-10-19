@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Grid, Item, Sticky, Form, Radio, Input } from 'semantic-ui-react';
+import { Grid, Sticky } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 import api from '../api.js';
@@ -20,19 +20,38 @@ export default class Cart extends Component {
         this.setState({
           shippingOptions: data,
           shipCost: data[0].shipCost
-        })
-      })
+        }, () => this.updateCost())
+      });
+  }
 
+  updateCost = () => {
+    let discount = 0; 
+    if (this.state.promotion) {
+      if (this.state.promotion.promotionType === 'PercentOff') {
+        discount = this.state.merchandiseTotal * this.state.promotion.promoAmt;
+      } else if (this.state.promotion.promotionType === 'ValueOff') {
+        discount = this.state.promotion.promoAmt;
+      }
+    }
 
+    let subTotal = this.state.merchandiseTotal + this.state.shipCost - discount;
+    let tax = Math.ceil(subTotal * .1); 
+    let total = subTotal + tax; 
+    this.setState({
+      discount,
+      subTotal, 
+      tax, 
+      total,
+    })
   }
 
   radioCheck = shipCost => this.state.shipCost === shipCost
 
-  handleRadioChange = (e, { value }) => this.setState({ shipCost: value })
+  handleRadioChange = (e, { value }) => this.setState({ shipCost: value }, () => this.updateCost())
 
   handleInputChange = (event) => this.setState({ [event.target.name]: event.target.value })
 
-  handlePlaceOrder = (taxTotal, shippingTotal) => {
+  handlePlaceOrder = () => {
 
   }
 
@@ -43,27 +62,18 @@ export default class Cart extends Component {
         orderItems.push(JSON.parse(window.sessionStorage[key]));
       }
     }
-
-    this.setState({ orderItems: orderItems });
-  }
-
-  calculateDiscount = (discount, merchandiseTotal) => {
-    if (this.state.promotion) {
-      if (this.state.promotion.promotionType === 'PercentOff') {
-        discount = merchandiseTotal * this.state.promotion.promoAmt;
-      } else if (this.state.promotion.promotionType === 'ValueOff') {
-        discount = merchandiseTotal - this.state.promotion.promoAmt;
-      }
-    }
+    let merchandiseTotal = orderItems.reduce((a, b) => a + (b.qtyOrdered * b.price), 0);
+    
+    this.setState({ 
+      orderItems: orderItems,
+      merchandiseTotal: merchandiseTotal
+    });
   }
 
   applyPromotion = () => {
     api.promotion.getOne({promoId: this.state.promoId})
       .then(({ data }) => {
-        this.setState({promotion: data});
-      })
-      .then(() => {
-
+        this.setState({promotion: data}, () => this.updateCost());
       })
   }
 
@@ -91,9 +101,13 @@ export default class Cart extends Component {
                   Order Summary
                 </h2>
                 <OrderSummary 
-                  promotions={this.state.promotions}
-                  orderItems={this.state.orderItems}
-                  shippingCost={this.state.shipCost}
+                  merchandiseTotal={this.state.merchandiseTotal}
+                  discount={this.state.discount}
+                  shipCost={this.state.shipCost}
+                  subTotal={this.state.subTotal}
+                  tax={this.state.tax}
+                  total={this.state.total}
+                  handlePlaceOrder={this.handlePlaceOrder}
                 />
               </Sticky>
             </Grid.Column>

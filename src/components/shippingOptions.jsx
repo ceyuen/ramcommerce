@@ -19,8 +19,7 @@ const ShippingOptions = ({ shippingOptions, handleRadioChange, radioCheck }) => 
             />
           </Form.Field>
         ))
-        : null
-      }
+        : null}
     </Form>
   </div>
 )
