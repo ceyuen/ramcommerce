@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Radio } from 'semantic-ui-react';
 
 const ShippingOptions = ({ shippingOptions, handleRadioChange, radioCheck }) => (
-  <div>
+  <div className='border-box'>
     <h2>
       Shipping Options
     </h2>

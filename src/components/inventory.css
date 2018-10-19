@@ -1,6 +1,4 @@
 .inventory-container {
-  width: 80%;
-  margin: auto;
   display: grid;
   justify-items: center;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

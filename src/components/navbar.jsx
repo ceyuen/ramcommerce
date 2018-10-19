@@ -7,7 +7,7 @@ import './navbar.css';
 export default class Navbar extends Component {
   render() {
     return (
-      <Menu pointing secondary className='navbar'>
+      <Menu pointing secondary className='content-width'>
         <Menu.Item
           name='shop'
           onClick={this.handleItemClick} >

@@ -68,7 +68,7 @@ export default class ProductDetails extends Component {
 
   render() {
     return (
-      <div className='product-details'>
+      <div className='content-width'>
         {this.state.product
           ? <Grid stackable divided='vertically'>
             <Grid.Row columns={2}>

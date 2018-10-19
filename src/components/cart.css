@@ -1,5 +1,11 @@
-.cart {
-  width: 80%;
-  margin: auto;
+.border-box {
+  border: 1px grey solid;
+  padding: 1em;
+  margin-top: 2em;
+  margin-bottom: 2em;
 }
 
+.cart-container { 
+  position: relative;
+  z-index: 0;
+}

@@ -102,7 +102,7 @@ export default class Cart extends Component {
 
   render() {
     return (
-      <div className='cart'>
+      <div className='content-width cart-container'>
         {window.sessionStorage.length
           ? <Grid stackable columns={2}>
             <Grid.Column width={12}>

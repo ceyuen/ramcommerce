@@ -2,7 +2,7 @@ import React from 'react';
 import { Input, Button } from 'semantic-ui-react';
 
 const PromotionInCart = ({ applyPromotion, handleInputChange }) => (
-    <div>
+    <div className='border-box'>
       <h2>
         Promotions
       </h2>

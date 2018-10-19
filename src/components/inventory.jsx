@@ -17,7 +17,7 @@ export default class Inventory extends Component {
 
   render() {
     return (
-      <div className='inventory-container'>
+      <div className='content-width inventory-container'>
         {this.state.inventory 
           ? this.state.inventory.map((item, key) => (
             <Link to={`/shop/${item.itemId}`} key={key}>
