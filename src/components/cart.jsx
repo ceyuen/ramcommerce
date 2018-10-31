@@ -32,7 +32,7 @@ export default class Cart extends Component {
     let discount = 0;
     if (this.state.promotion) {
       if (this.state.promotion.promotionType === 'PercentOff') {
-        discount = this.state.merchandiseTotal * this.state.promotion.promoAmt;
+        discount = Math.round(this.state.merchandiseTotal * (this.state.promotion.promoAmt / 100));
       } else if (this.state.promotion.promotionType === 'ValueOff') {
         discount = this.state.promotion.promoAmt;
       }
